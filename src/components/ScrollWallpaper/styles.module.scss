@@ -1,0 +1,26 @@
+.container {
+  width: 100%;
+  height: calc(100vh - 92px - 96px);
+
+  background: url("../../assets/wallpaper.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+
+  > div {
+    position: absolute;
+    top: 45%;
+    left: 12%;
+
+    > img {
+      margin-bottom: 10px;
+    }
+
+    > strong {
+      font-size: 18px;
+      text-transform: uppercase;
+      color: var(--gray);
+      font-weight: 500;
+    }
+  }
+}

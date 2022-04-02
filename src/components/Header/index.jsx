@@ -10,7 +10,7 @@ export const Header = () => {
       </ul>
       <h1>Music Legends</h1>
       <div>
-        <p>Iuri Silva</p>
+        <p>Lucas Lima</p>
         <img src="https://github.com/lucaslimasz.png" alt="" />
       </div>
     </header>
