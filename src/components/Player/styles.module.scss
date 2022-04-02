@@ -1,0 +1,64 @@
+.player {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  max-width: 1110px;
+  margin: auto;
+  padding: 22px 20px;
+
+  position: absolute;
+  margin: auto;
+  bottom: -47px;
+
+  width: 100%;
+
+  left: 50%;
+  right: 50%;
+  transform: translate(-50%, -50%);
+
+  > div {
+    display: flex;
+    align-items: center;
+    > div {
+      display: flex;
+      flex-direction: column;
+
+      margin-left: 14px;
+      strong {
+        margin-bottom: 3px;
+        font-size: 18px;
+        color: var(--light);
+      }
+      span {
+        font-size: 13px;
+        color: var(--gray);
+      }
+    }
+  }
+}
+
+.actions {
+  button {
+    &:nth-child(1){
+      margin-right: 40px;
+    }
+    &:nth-child(5){
+      margin-left: 40px;
+    }
+    &.buttonPlay {
+      margin: 0 25px;
+      padding: 12px 11px 12px 18px;
+      background: #200C30;
+      border-radius: 100px;
+    }
+  }
+}
+
+.buttonEffect {
+  button {
+    &+button {
+      margin-left: 40px;
+    }
+  }
+}
