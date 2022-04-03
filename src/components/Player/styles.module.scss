@@ -62,3 +62,10 @@
     }
   }
 }
+
+.Slider {
+  position: absolute;
+  width: calc(100% + 200px);
+  bottom: 90px;
+  z-index: 1;
+}
