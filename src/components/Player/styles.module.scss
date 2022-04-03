@@ -17,35 +17,44 @@
   right: 50%;
   transform: translate(-50%, -50%);
 
-  > div {
+  >div {
     display: flex;
     align-items: center;
-    > div {
+
+    >div {
       display: flex;
       flex-direction: column;
 
       margin-left: 14px;
+
       strong {
         margin-bottom: 3px;
         font-size: 18px;
         color: var(--light);
       }
+
       span {
         font-size: 13px;
         color: var(--gray);
       }
     }
   }
+
+  audio {
+    display: none;
+  }
 }
 
 .actions {
   button {
-    &:nth-child(1){
+    &:nth-child(1) {
       margin-right: 40px;
     }
-    &:nth-child(5){
+
+    &:nth-child(5) {
       margin-left: 40px;
     }
+
     &.buttonPlay {
       margin: 0 25px;
       padding: 12px 11px 12px 18px;
@@ -57,6 +66,8 @@
 
 .buttonEffect {
   button {
+    position: relative;
+
     &+button {
       margin-left: 40px;
     }
@@ -65,7 +76,7 @@
 
 .Slider {
   position: absolute;
-  width: calc(100% + 200px);
+  width: 100%;
   bottom: 90px;
   z-index: 1;
 }
