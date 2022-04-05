@@ -1,4 +1,5 @@
 import { useRef, useState, useEffect } from "react";
+import api from "../../config/api";
 
 import Slider from "rc-slider";
 import "rc-slider/assets/index.css";
@@ -10,19 +11,23 @@ import Repeat from "../../assets/icons/rotate-cw.svg";
 import Previous from "../../assets/icons/arrow-left.svg";
 import Next from "../../assets/icons/arrow-right.svg";
 import Play from "../../assets/icons/play.svg";
+import Muted from "../../assets/icons/muted.svg";
 import Pause from "../../assets/icons/pause.svg";
 import Shuffle from "../../assets/icons/repeat.svg";
 import Volume from "../../assets/icons/volume.svg";
 import Minimize from "../../assets/icons/minimize.svg";
-
-import Server from "../../utils/server";
+import Maximize from "../../assets/icons/maximize.svg";
 
 export const Player = () => {
   const audioRef = useRef(null);
   const [playAudio, setPlayAudio] = useState(false);
   const [progress, setProgress] = useState(0);
+  const [positionMusic, setPositionMusic] = useState(0);
+  const [songs, setSongs] = useState(0);
+  const [isMuted, setIsMuted] = useState(false);
+  const [hasFullScreen, setHasFullScreen] = useState(false);
 
-  const option = Server[0];
+  const option = songs[positionMusic];
 
   const handlePlayAudio = () => {
     if (playAudio) {
@@ -47,6 +52,46 @@ export const Player = () => {
     });
   }
 
+  const nextMusic = () => {
+    if (songs.length - 1 !== positionMusic) {
+      setPositionMusic((prevState) => (prevState += 1));
+      setPlayAudio(true);
+    }
+  };
+
+  const playPreviousMusic = () => {
+    if (positionMusic > 0) {
+      setPositionMusic((prevState) => (prevState -= 1));
+      setPlayAudio(true);
+    }
+  };
+
+  const listSongs = async () => {
+    const { data } = await api.get("/songs");
+    setSongs(data);
+  };
+
+  const handleMutedMusic = () => {
+    setIsMuted((prevState) => !prevState);
+  };
+
+  const handleFullScreen = () => {
+    if (hasFullScreen) {
+      document.exitFullscreen();
+      setHasFullScreen(false);
+    } else {
+      document.documentElement.requestFullscreen();
+      setHasFullScreen(true);
+    }
+  };
+
+  useEffect(() => {
+    (async () => {
+      await listSongs();
+      setPlayAudio(true);
+    })();
+  }, []);
+
   return (
     <>
       <div className={styled.Slider}>
@@ -56,15 +101,15 @@ export const Player = () => {
           handleStyle={{ borderBlockColor: "#2EF4CC", borderWidth: 4 }}
           onChange={(e) => handleSeek(Number(e))}
           value={progress}
-          max={option.duration}
+          max={option?.duration}
         />
       </div>
       <div className={styled.player}>
         <div className={styled.information}>
           <img src={Heart} alt="Favoritar" />
           <div>
-            <strong>{option.title}</strong>
-            <span>{option.name}</span>
+            <strong>{option?.title}</strong>
+            <span>{option?.name}</span>
           </div>
         </div>
 
@@ -72,7 +117,7 @@ export const Player = () => {
           <button>
             <img src={Shuffle} alt="" />
           </button>
-          <button>
+          <button onClick={playPreviousMusic}>
             <img src={Previous} alt="" />
           </button>
           <button className={styled.buttonPlay} onClick={handlePlayAudio}>
@@ -86,27 +131,30 @@ export const Player = () => {
               <img src={Play} alt="" />
             )}
           </button>
-          <button>
+          <button onClick={nextMusic}>
             <img src={Next} alt="" />
           </button>
           <button>
             <img src={Repeat} alt="" />
           </button>
         </div>
-
-        <audio
-          controls
-          src={option.url}
-          ref={audioRef}
-          onLoadedMetadata={setupProgressListener}
-        />
+        {songs && (
+          <audio
+            controls
+            autoPlay
+            src={option?.url}
+            ref={audioRef}
+            onLoadedMetadata={setupProgressListener}
+            muted={isMuted}
+          />
+        )}
 
         <div className={styled.buttonEffect}>
-          <button>
-            <img src={Volume} alt="" />
+          <button onClick={handleMutedMusic}>
+            <img src={isMuted ? Muted : Volume} alt="" />
           </button>
-          <button>
-            <img src={Minimize} alt="" />
+          <button onClick={handleFullScreen}>
+            <img src={hasFullScreen ? Maximize : Minimize} alt="" />
           </button>
         </div>
       </div>

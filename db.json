@@ -1,0 +1,18 @@
+{
+  "songs": [
+    {
+      "id": "1",
+      "name": "Lunar Revel 2022 Theme",
+      "title": "Warrior",
+      "url": "./src/assets/music/League-of-Legends-Lunar-Revel-2022-Theme.mp3",
+      "duration": "183"
+    },
+    {
+      "id": "2",
+      "name": "Drama",
+      "title": "Drama Sonora",
+      "url": "./src/assets/music/Drama.mp3",
+      "duration": "145,8"
+    }
+  ]
+}
